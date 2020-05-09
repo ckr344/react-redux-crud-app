@@ -1,6 +1,8 @@
 // import React from 'react';
 import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
+import { connect } from 'react-redux'
+import { increment, decrement } from '../actions'
 
 // function App() {
 //   // const greeting = "Hi!!";
@@ -49,33 +51,42 @@ import React, { Component } from 'react';
 //   // )
 // }
 
-const App = () => ( <Counter> </Counter> )
+// const App = () => ( <Counter> </Counter> )
 
-class Counter extends Component {
-  // constructorは初期化処理で実行されるメソッド
-  constructor(props){
-    super(props)
-    this.state = {count: 0}
-  }
+class App extends Component {
+  // Reduxを使用する場合は同じ処理をreducerで行うことになるため記述が不要となる
+  // constructorは初期化処理で実行されるメソッド(コールバック)
+  // constructor(props){
+  //   super(props)
+  //   this.state = {count: 0}
+  // }
 
-  handlePlusButton = () => {
-    this.setState({count: this.state.count + 1})
-  }
-
-  handleMinusButton = () => {
-    this.setState({count: this.state.count - 1})
-  }
+  // Reduxを使用する場合は同じ処理をaction creatorで実行しているため不要となる
+  // handlePlusButton = () => {
+  //   this.setState({count: this.state.count + 1})
+  // }
+  // handleMinusButton = () => {
+  //   this.setState({count: this.state.count - 1})
+  // }
 
   render(){
+    const props = this.props
+
     return(
       <React.Fragment>
-        <div>count: {this.state.count}</div>
-        <button onClick={this.handlePlusButton}>+1</button>
-        <button onClick={this.handleMinusButton}>-1</button>
+        <div>value: { props.value }</div>
+        <button onClick={ props.increment }>+1</button>
+        <button onClick={ props.decrement }>-1</button>
       </React.Fragment>
     )
   }
 }
+
+const mapStateToProps = state => ({ value: state.count.value })
+const mapDispatchToProps = dispatch => ({
+  increment: () => dispatch(increment()),
+  decrement: () => dispatch(decrement())
+})
 
 // const User = (props) => {
 //   return <div>Hi! I am {props.name}!, and {props.age} years old! </div>
@@ -95,4 +106,6 @@ class Counter extends Component {
 //   age: 1
 // }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App)
+
+// export default App;
