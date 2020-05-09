@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // function App() {
 //   // const greeting = "Hi!!";
@@ -32,9 +33,9 @@ import React from 'react';
 
 const App = () => {
   const profiles = [
-    { name: "Taro", age: "10" },
-    { name: "Hanako", age: "5" },
-    { name: "Saburo" }
+    { name: "Taro", age: 10 },
+    { name: "Hanako", age: 5 },
+    { name: "Saburo", age: 3 }
   ]
   return(
     <div>
@@ -51,8 +52,18 @@ const User = (props) => {
   return <div>Hi! I am {props.name}!, and {props.age} years old! </div>
 }
 
-User.defaultProps = {
-  age: 1
+// 型チェック
+// isRequiredでageという属性が必ず設定されてないと駄目ということになる
+// 初めに定義しておくことが重要
+User.propTypes = {
+  name: PropTypes.string,
+  age: PropTypes.number.isRequired
 }
+
+// デフォルト値の設定
+// 値が入ってなかったときのデフォルト
+// User.defaultProps = {
+//   age: 1
+// }
 
 export default App;
