@@ -1,60 +1,35 @@
+// ReactComponentファイルに必要
 import React, { Component } from 'react';
+// reduxを使用する場合に必要なconnect関数
 import { connect } from 'react-redux'
-import _ from 'lodash'
+// ページ内にリンクを生成するために必要
 import { Link } from 'react-router-dom'
 
-import { readEvents } from '../actions'
+// アクションを呼び出すために必要
+// import { postEvents } from '../actions'
 
-class EventsIndex extends Component {
-  // マウント後にやりたい処理を書く
-  componentDidMount() {
-    this.props.readEvents()
-  }
-  // イベント一覧の描画
-  renderEvents() {
-    return _.map(this.props.events, event => (
-      <tr key={event.id}>
-        <td>{event.id}</td>
-        <td>{event.title}</td>
-        <td>{event.body }</td>
-      </tr>
-    ))
-  }
+// ?????
+// import { ReactComponent } from '*.svg';
 
-  // renderする内容
+// Componentのタイトル
+class EventsNew extends Component {
+
+// 　renderする内容
   render(){
     return(
       <React.Fragment>
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Title</th>
-              <th>Body</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {this.renderEvents()}
-          </tbody>
-        </table>
-
-        <Link to="/events/new">New Event</Link>
+        <div>foo</div>
       </React.Fragment>
     )
   }
 }
 
-// イベントに関する描画に必要
-const mapStateToProps = state => ({ events: state.events })
 
-const mapDispatchToProps = ({ readEvents })
-// const mapDispatchToProps = dispatch => ({
-//   increment: () => dispatch(increment()),
-//   decrement: () => dispatch(decrement())
-// })
+// const mapDispatchToProps = ({ postEvent })
 
-export default connect(mapStateToProps, mapDispatchToProps)(EventsIndex)
+export default connect(null, null)(EventsNew)
+
+
 
 // function App() {
 //   // const greeting = "Hi!!";
