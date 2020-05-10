@@ -7,11 +7,11 @@ import { Field, reduxForm } from 'redux-form'
 // ページ内にリンクを生成するために必要
 import { Link } from 'react-router-dom'
 
-// Postアクションを呼び出すために必要
-import { postEvent } from '../actions'
+// get/delete/putアクションを呼び出すために必要。putは更新。
+import { getEvent, deleteEvent, putEvent } from '../actions'
 
 // Componentのタイトル
-class EventsNew extends Component {
+class EventsShow extends Component {
 
   // onSubmitはイニシャライズしたときにバインドすることとする
   constructor(props) {
@@ -36,7 +36,7 @@ class EventsNew extends Component {
   // 非同期処理を行うためにはasyncが必要
   async onSubmit(values){
     // postEventにvaluesの値を渡す
-    await this.props.postEvent(values)
+    // await this.props.postEvent(values)
     // トップページの履歴に追加
     this.props.history.push('/')
   }
@@ -77,9 +77,10 @@ const validate = values => {
   return errors
 }
 
-const mapDispatchToProps = ({ postEvent })
+// const mapDispatchToProps = ({ postEvent })
 
 // Fromをしようしたときに必要。バリデーションの設定、フォームの名前を定義する。
-export default connect(null, mapDispatchToProps)(
-  reduxForm({ validate, form: 'eventNewForm' })(EventsNew)
+export default connect(null, null)(
+  reduxForm({ validate, form: 'eventShowForm' })(EventsShow)
 )
+
