@@ -17,6 +17,7 @@ class EventsShow extends Component {
   constructor(props) {
     super(props)
     this.onSubmit = this.onSubmit.bind(this)
+    this.onDeleteClick = this.onDeleteClick.bind(this)
   }
 
   // フォームのrenderFieldというメソッドを定義。入力される値が渡ってくる。
@@ -31,6 +32,15 @@ class EventsShow extends Component {
       {/* タッチされて尚且エラーがある場合のバリデーションの記述。問題があれば「error」を表示 */}
       {touched && error && <span>{error}</span>}
     </div>)
+  }
+
+  // 非同期処理を行うためにはasyncが必要
+  async onDeleteClick() {
+    // idの拾い方。現在どんなパラメータを持っているのかをconsole.log(this.props.match)で確認する。下記でアクションにidを渡す。
+    const { id } = this.props.match.params
+    // アクションで定義するdeleteEventを記載。idを引数に。
+    await this.props.deleteEvent(id)
+    this.props.history.push('/')
   }
 
   // 非同期処理を行うためにはasyncが必要
@@ -58,6 +68,8 @@ class EventsShow extends Component {
           {/* inputタグでpristineという状態を渡すことで何も入力されていなかったときにsubmitボタンが押せなくなる */}
           <input type="submit" value="Submit" disabled={pristine || submitting} />
           <Link to="/">Cancel</Link>
+          {/* onDeleteClickの中でDeleteの処理を行う */}
+          <Link to="/" onClick={this.onDeleteClick}>Delete</Link>
         </div>
       </form>
     )
@@ -77,10 +89,11 @@ const validate = values => {
   return errors
 }
 
-// const mapDispatchToProps = ({ postEvent })
+// 本ComponentにdeleteEventをバインド
+const mapDispatchToProps = ({ deleteEvent })
 
 // Fromをしようしたときに必要。バリデーションの設定、フォームの名前を定義する。
-export default connect(null, null)(
+export default connect(null, mapDispatchToProps)(
   reduxForm({ validate, form: 'eventShowForm' })(EventsShow)
 )
 

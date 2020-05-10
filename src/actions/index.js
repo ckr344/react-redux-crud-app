@@ -8,21 +8,30 @@ import axios from 'axios'
 export const READ_EVENTS = 'READ_EVENTS'
 // 新規投稿用
 export const CREATE_EVENT = 'CREATE_EVENT'
+// 削除用
+export const DELETE_EVENT = 'DELETE_EVENT'
 
 const ROOT_URL = 'https://udemy-utils.herokuapp.com/api/v1'
 const QUERYSTRING = '?token=token123'
 
-// 一覧表示用アクション。APIのURLを指定して全てのデータを持ってくる。
+// 一覧表示用関数アクション。APIのURLを指定して全てのデータを持ってくる。
 export const readEvents = () => async dispatch => {
   const response = await axios.get(`${ROOT_URL}/events${QUERYSTRING}`)
   dispatch({ type: READ_EVENTS, response })
 }
 
-// 新規投稿用アクション
+// 新規投稿用関数アクション
 // valuesで入力された値を受け取る >> axiosのpostでvaluesを送信
 export const postEvent = values => async dispatch => {
   const response = await axios.post(`${ROOT_URL}/events${QUERYSTRING}`, values)
   dispatch({ type: CREATE_EVENT, response })
+}
+
+// 削除用関数アクション
+export const deleteEvent = id => async dispatch => {
+  await axios.delete(`${ROOT_URL}/events/${id}${QUERYSTRING}`)
+  // reducer側に削除されたidを渡してあげる
+  dispatch({ type: DELETE_EVENT, id })
 }
 
 // export const increment = () => ({
