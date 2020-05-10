@@ -9,8 +9,10 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 import './index.css';
 import reducer from './reducers'
+// 各コンポーネントをインポート
 import EventsIndex from './components/events_index';
 import EventsNew from './components/events_new';
+import EventsShow from './components/events_show';
 import * as serviceWorker from './serviceWorker';
 
 // createStoreの第2引数にはenhancerというものを渡している
@@ -20,12 +22,17 @@ const enhancer = process.env.NODE_ENV === 'development' ?
   composeWithDevTools(applyMiddleware(thunk)) : (applyMiddleware(thunk))
 const store = createStore(reducer, enhancer)
 
+// ルーティングの設定
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
-        <Route exact path="/events/new" component={EventsNew} />
+        {/* exactとつけると書かれているパスに完全にマッチする場合のみ有効になる。マッチ条件が厳しくなる。 */}
+        <Route path="/events/new" component={EventsNew} />
+        <Route path="/events/:id" component={EventsShow} />
+        {/* 下記2つはどちらもルートのバス */}
         <Route exact path="/" component={EventsIndex} />
+        <Route exact path="/events" component={EventsIndex} />
       </Switch>
     </BrowserRouter>
   </Provider>,
