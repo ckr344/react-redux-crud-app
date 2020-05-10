@@ -1,8 +1,12 @@
+// ReactComponentファイルに必要
 import React, { Component } from 'react';
+// reduxを使用する場合に必要なconnect関数
 import { connect } from 'react-redux'
 import _ from 'lodash'
+// ページ内にリンクを生成するために必要
 import { Link } from 'react-router-dom'
 
+// Getアクションを呼び出すために必要
 import { readEvents } from '../actions'
 
 class EventsIndex extends Component {
